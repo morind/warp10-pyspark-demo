@@ -41,23 +41,6 @@ configurations {
 }
 
 //
-// Force versions
-//
-configurations.all {
-  resolutionStrategy {
-    // fail eagerly on version conflict (includes transitive dependencies)
-    // e.g. multiple different versions of the same dependency (group and name are equal)
-    //failOnVersionConflict()
-
-    // force certain versions of dependencies (including transitive)
-    //  *append new forced modules:
-    // This is needed to force Guava to 15.0 and not 17.0 as Renjin pulls
-    // HBase does not work with > 15.0
-    force 'com.google.guava:guava:15.0'
-  }
-}
-
-//
 // Project source sets
 // MUST appear before 'dependencies' so all source sets are known
 //
@@ -69,6 +52,7 @@ sourceSets {
 }
 
 repositories {
+  flatDir name:'ExternalJars', dirs:'./lib'
   jcenter()
   maven {
     url 'https://repository.apache.org/content/groups/public'
@@ -103,9 +87,9 @@ repositories {
 // GLOBAL DEPENDENCIES
 dependencies {
   //
-  // WarpScript
+  // WarpScript-Spark
   //
-  compile 'io.warp10:warp10-spark:0.0.5'
+  compile 'io.warp10:warp10-spark:0.0.6-rc1'
 
   testCompile group: 'junit', name: 'junit', version: '4.6'
 
